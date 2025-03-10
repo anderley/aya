@@ -1,0 +1,133 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">Empresas</h1>
+    </div>
+    <div class="d-flex justify-content-end">
+        <a class="btn btn-primary btn-sm" href="{% url 'incluir_empresa' %}">
+            <i class="fa-solid fa-plus"></i> Incluir
+        </a>
+    </div>
+    <div class="table-responsive small">
+        <table class="table table-striped table-sm">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Nome</th>
+                    <th scope="col">CNPJ</th>
+                    <th scope="col">Razão</th>
+                    <th scope="col">Insc. Municipal</th>
+                    <th scope="col">Insc. Estadual</th>
+                    <th scope="col">Telefone</th>
+                    <th scope="col">Whatsapp</th>
+                    <th scope="col">Cidade</th>
+                    <th scope="col">Estado</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for empresa in page_obj %}
+                    <tr>
+                        <td>{{ empresa.id }}</td>
+                        <td>{{ empresa.nome }}</td>
+                        <td>{{ empresa.cnpj }}</td>
+                        <td>{{ empresa.nome_razao_social }}</td>
+                        <td>{{ empresa.im }}</td>
+                        <td>{{ empresa.ie }}</td>
+                        <td>{{ empresa.telefone }}</td>
+                        <td>{{ empresa.whatsapp }}</td>
+                        <td>{{ empresa.cidade }}</td>
+                        <td>{{ empresa.estado }}</td>
+                        <td>
+                            <a class="btn btn-outline-secondary btn-sm" href="{% url 'editar_empresa' empresa.pk %}">
+                                <i class="fa fa-pencil"></i>
+                            </a>
+                            <a class="btn btn-outline-danger btn-sm" href="{% url 'deletar_empresa' empresa.pk %}">
+                                <i class="fa fa-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <nav aria-label="Page navigation example">
+            <ul class="pagination pagination-sm justify-content-end">
+                {% if page_obj.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page=1">
+                        <i class="fa-solid fa-angles-left"></i>
+                    </a>
+                </li>
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}">
+                            <i class="fa-solid fa-chevron-left"></i>
+                        </a>
+                    </li>
+                {% else %}
+                    <li class="page-item disabled">
+                        <a class="page-link">
+                            <i class="fa-solid fa-angles-left"></i>
+                        </a>
+                    </li>
+                    <li class="page-item disabled">
+                        <a class="page-link">
+                            <i class="fa-solid fa-chevron-left"></i>
+                        </a>
+                    </li>
+                {% endif %}
+                {% if page_obj.has_previous %}
+                    <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">{{ page_obj.previous_page_number }}</a></li>
+                {% endif %}
+                <li class="page-item active"><a class="page-link" href="#">{{ page_obj.number }}</a></li>
+                {% if page_obj.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.next_page_number }}">{{ page_obj.next_page_number }}</a>
+                    </li>
+                {% endif %}
+                {% if page_obj.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.next_page_number }}">
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">
+                            <i class="fa-solid fa-angles-right"></i>
+                        </a>
+                    </li>
+                {% else %}
+                    <li class="page-item disabled">
+                        <a class="page-link">
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </a>
+                    </li>
+                    <li class="page-item disabled">
+                        <a class="page-link">
+                            <i class="fa-solid fa-angles-right"></i>
+                        </a>
+                    </li>
+                {% endif %}
+                </li>
+            </ul>
+        </nav>
+    </div>
+    
+    <div class="modal fade" id="cadEmpresa" tabindex="-1" aria-labelledby="cadEmpresaLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <p>Modal body text goes here.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                    <button type="button" class="btn btn-primary">Salvar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}

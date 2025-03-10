@@ -1,0 +1,14 @@
+.wrapper-public {
+    min-height: 1024px;
+}
+@media (max-width: 768px) {
+    .wrapper-public {
+        min-width: 768px;
+    }
+}
+
+.bg-public {
+    background-image: linear-gradient(rgba(255,255,255,0.5), rgba(255,255,255,0.5)), url('/static/img/login.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+}

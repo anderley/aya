@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">Cadastro Fornecedores</h1>
+    </div>
+
+    <div class="continer">
+        <div class="row">
+            <div class="col-md-8">
+                <form class="row g-2" method="post">
+                    {% csrf_token %}
+                    <div class="col-md-8">
+                        {{ form.nome|as_crispy_field }}
+                    </div>
+                    <div class="col-md-8">
+                        {{ form.nome_razao_social|as_crispy_field }}
+                    </div>
+                    <div class="col-md-4">
+                        {{ form.cpf_cnpj|as_crispy_field }}
+                    </div>
+                    <div class="col-md-4">
+                        {{ form.ie|as_crispy_field }}
+                    </div>
+                    <div class="col-md-4">
+                        {{ form.im|as_crispy_field }}
+                    </div>
+                    <div class="col-md-4">
+                        {{ form.telefone|as_crispy_field }}
+                    </div>
+                    <div class="col-md-4">
+                        {{ form.whatsapp|as_crispy_field }}
+                    </div>
+                    <div class="col-md-8">
+                        {{ form.email|as_crispy_field }}
+                    </div>
+                    <div class="col-md-8">
+                        {{ form.endereco|as_crispy_field }}
+                    </div>
+                    <div class="col-md-2">
+                        {{ form.numero|as_crispy_field }}
+                    </div>
+                    <div class="col-md-4">
+                        {{ form.complemento|as_crispy_field }}
+                    </div>
+                    <div class="col-md-5">
+                        {{ form.bairro|as_crispy_field }}
+                    </div>
+                    <div class="col-md-5">
+                        {{ form.cidade|as_crispy_field }}
+                    </div>
+                    <div class="col-md-4">
+                        {{ form.estado|as_crispy_field }}
+                    </div>
+                    <div class="col-md-4">
+                        {{ form.cep|as_crispy_field }}
+                    </div>
+                    <div class="d-flex flex-row-reverse py-2">
+                        <button type="submit" class="btn btn-primary ms-2">Salvar</button>
+                        <a href="{% url 'listar_fornecedores' %}" class="btn btn-secondary">Cancelar</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock content %}
+
+{% block js %}
+    <script src="{% static 'js/jquery.mask.min.js' %}"></script>
+
+    <script>
+        var cpfCnpjOptions = {
+                onKeyPress: function(val, e, field, options) {
+                    const masks = ['000.000.000-00', '00.000.000/0000-00'];
+                    let mask = val.replace(/\D/g, '').length === 14 ? masks[1] : masks[0];
+                    $('#id_cpf_cnpj').mask(mask, options);
+                }
+            };
+        $(document).ready(function  () {
+            $('#id_cpf_cnpj').mask('000.000.000-00', cpfCnpjOptions);
+            $('#id_telefone').mask('(00) 0000-0000');
+            $('#id_whatsapp').mask('(00) 00000-0000');
+            $('#id_cep').mask('00000-000');
+        });
+    </script>
+{% endblock %}

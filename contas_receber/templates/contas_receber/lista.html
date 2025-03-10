@@ -1,0 +1,193 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">Contas Receber</h1>
+    </div>
+
+    <form method="get" >
+        <input type="hidden" name="page" value="{{ request.GET.page }}"/>
+        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+            <div class="container-fluid">
+                <div class="col-6 d-flex">
+                    <div class="col-auto me-2">
+                      <select name="categoria" id="id_categoria" class="form-select form-select-sm" aria-label="Default select example">
+                        <option value="">Selecione Categoria</option>
+                        {% for categoria in categorias %}
+                          <option value="{{ categoria.pk }}" {% if categoria.pk|stringformat:"s" == request.GET.categoria %} selected {% endif %}>{{ categoria.descricao }}</option>
+                        {% endfor %}
+                      </select>
+                    </div>
+                    <div class="col-6 col-auto me-2">
+                        <select name="centro_custo" id="id_centro_custo" class="form-select form-select-sm" aria-label="Default select example">
+                          <option value="">Selecione Centro de Custo</option>
+                          {% for centro_custo in centro_custos %}
+                            <option value="{{ centro_custo.pk }}" {% if centro_custo.pk|stringformat:"s" == request.GET.centro_custo %} selected {% endif %}>{{ centro_custo.descricao }}</option>
+                          {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-auto">
+                        <button type="submit" class="btn btn-sm btn-secondary">Filtrar</button>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-end">
+                    <button class="btn btn-danger btn-sm me-2" data-bs-toggle="modal" type="button" data-bs-target="#deletarItems">
+                        <i class="fa-solid fa-trash"></i> Deletar Selecionados
+                    </button>
+                    <a class="btn btn-primary btn-sm" href="{% url 'incluir_conta_receber' %}">
+                        <i class="fa-solid fa-plus"></i> Incluir
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </form>
+    <form method="post" action="{% url 'deletar_items_conta_receber' %}">
+        {% csrf_token %}
+        <div class="table-responsive small">
+            <table class="table table-striped table-sm">
+                <thead>
+                    <tr>
+                        <th><input type="checkbox" id="selectAll" /></th>
+                        <th scope="col">#</th>
+                        <th scope="col">Empresa</th>
+                        <th scope="col">Fornecedor</th>
+                        <th scope="col">Categoria</th>
+                        <th scope="col">Centro de Custo</th>
+                        <th scope="col">Data Emissão</th>
+                        <th scope="col">Valor</th>
+                        <th scope="col">Moeda Estrangeira</th>
+                        <th scope="col">Cotaçao</th>
+                        <th scope="col">Data Vencimento</th>
+                        <th scope="col">Conta Corrente</th>
+                        <th scope="col">Projeto</th>
+                        <th scope="col">Forma Pagamento</th>
+                        <th scope="col">Num. Documento</th>
+                        <th scope="col">Parcelas</th>
+                        <th scope="col">Data Pagamento</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for conta_receber in page_obj %}
+                        <tr>
+                            <td><input type="checkbox" name="items" value="{{ conta_receber.id }}" /></td>
+                            <td>{{ conta_receber.id }}</td>
+                            <td>{{ conta_receber.empresa }}</td>
+                            <td>{{ conta_receber.fornecedor }}</td>
+                            <td>{{ conta_receber.categoria }}</td>
+                            <td>{{ conta_receber.centro_custo|default:"-" }}</td>
+                            <td>{{ conta_receber.data_emissao|date:'d/m/Y' }}</td>
+                            <td>{{ conta_receber.valor|floatformat:2 }}</td>
+                            <td>{{ conta_receber.valor_moeda_estrangeira|floatformat:2 }}</td>
+                            <td>{{ conta_receber.valor_cotacao|floatformat:2 }}</td>
+                            <td>{{ conta_receber.data_vencimento|date:'d/m/Y' }}</td>
+                            <td>{{ conta_receber.conta_corrente }}</td>
+                            <td>{{ conta_receber.projeto }}</td>
+                            <td>{{ conta_receber.forma_pagamento }}</td>
+                            <td>{{ conta_receber.num_documento }}</td>
+                            <td>{{ conta_receber.num_parcela }} / {{ conta_receber.parcelas }}</td>
+                            <td>{{ conta_receber.data_pagamento|date:'d/m/Y' }}</td>
+                            <td>
+                                <a class="btn btn-outline-secondary btn-sm" href="{% url 'editar_conta_receber' conta_receber.pk %}">
+                                    <i class="fa fa-pencil"></i>
+                                </a>
+                                <a class="btn btn-outline-danger btn-sm" href="{% url 'deletar_conta_receber' conta_receber.pk %}">
+                                    <i class="fa fa-trash"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <nav aria-label="Page navigation example">
+                <ul class="pagination pagination-sm justify-content-end">
+                    {% if page_obj.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page=1">
+                            <i class="fa-solid fa-angles-left"></i>
+                        </a>
+                    </li>
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ page_obj.previous_page_number }}">
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </a>
+                        </li>
+                    {% else %}
+                        <li class="page-item disabled">
+                            <a class="page-link">
+                                <i class="fa-solid fa-angles-left"></i>
+                            </a>
+                        </li>
+                        <li class="page-item disabled">
+                            <a class="page-link">
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </a>
+                        </li>
+                    {% endif %}
+                    {% if page_obj.has_previous %}
+                        <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">{{ page_obj.previous_page_number }}</a></li>
+                    {% endif %}
+                    <li class="page-item active"><a class="page-link" href="#">{{ page_obj.number }}</a></li>
+                    {% if page_obj.has_next %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ page_obj.next_page_number }}">{{ page_obj.next_page_number }}</a>
+                        </li>
+                    {% endif %}
+                    {% if page_obj.has_next %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ page_obj.next_page_number }}">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">
+                                <i class="fa-solid fa-angles-right"></i>
+                            </a>
+                        </li>
+                    {% else %}
+                        <li class="page-item disabled">
+                            <a class="page-link">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </a>
+                        </li>
+                        <li class="page-item disabled">
+                            <a class="page-link">
+                                <i class="fa-solid fa-angles-right"></i>
+                            </a>
+                        </li>
+                    {% endif %}
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        <div class="modal fade" id="deletarItems" tabindex="-1" aria-labelledby="deletarItemsLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <p>Confirma a exclusão dos itens selecionados.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Confirmar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    
+{% endblock content %}
+
+{% block js %}
+    <script>
+        $(document).ready(function () {
+            $("#selectAll").click(e => {
+                $("input[type=\"checkbox\"]").attr("checked", $("#selectAll").prop("checked"));
+            });
+        });
+    </script>
+{% endblock js %}

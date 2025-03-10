@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">Excluir Conta Pagar</h1>
+</div>
+
+<div class="continer">
+    <div class="row">
+        <div class="col-md-6">
+            <form class="row g-1" method="post">
+                {% csrf_token %}
+                <p>Você confirma a exclusão da conta a pagar "{{ object }}"?</p>
+                {{ form|crispy }}
+                
+                <div class="d-flex flex-row-reverse py-2">
+                    <button type="submit" class="btn btn-primary ml-5">Salvar</button>
+                    <a href="{% url 'listar_contas_pagar' %}" class="btn btn-secondary">Cancelar</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

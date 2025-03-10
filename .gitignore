@@ -1,0 +1,9 @@
+**/__pycache__
+**/migrations
+/collected_static
+/venv
+/staticfiles
+.idea
+.vscode
+app
+.env

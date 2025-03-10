@@ -1,0 +1,32 @@
+from django.db import models
+from django.utils.translation import gettext_lazy as _
+
+
+class Estados(models.TextChoices):
+    ACRE = 'Acre', _('Acre')
+    ALAGOAS = 'Alagoas', _('Alagoas')
+    AMAPA = 'Amapá', _('Amapá')
+    AMAZONAS = 'Amazonas', _('Amazonas')
+    BAHIA = 'Bahia', _('Bahia')
+    CEARA = 'Ceará', _('Ceará')
+    DISTRITO_FEDERAL = 'Distrito Federal', _('Distrito Federal')
+    ESPIRITO_SANTO = 'Espírito Santo', _('Espírito Santo')
+    GOIAS = 'Goiás', _('Goiás')
+    MARANHAO = 'Maranhão', ('Maranhão')
+    MATO_GROSSO = 'Mato Grosso', _('Mato Grosso')
+    MATO_GROSSO_SUL = 'Mato Grosso do Sul', _('Mato Grosso do Sul')
+    MINAS_GERAIS = 'Minas Gerais', _('Minas Gerais')
+    PARA = 'Pará', _('Pará')
+    PARAIBA = 'Paraíba', _('Paraíba')
+    PARANA = 'Paraná', _('Paraná')
+    PERNAMBUCO = 'Pernambuco', _('Pernambuco')
+    PIAUI = 'Piauí', _('Piauí')
+    RIO = 'Rio de Janeiro', _('Rio de Janeiro')
+    RIO_GRANDE_NORTE = 'Rio Grande do Norte', _('Rio Grande do Norte')
+    RIO_GRANDE_SUL = 'Rio Grande do Sul', _('Rio Grande do Sul')
+    RONDONIA = 'Rondônia', _('Rondônia')
+    RORAIMA = 'Roraima', _('Roraima')
+    SANTA_CATARINA = 'Santa Catarina', _('Santa Catarina')
+    SAO_PAULO = 'São Paulo', _('São Paulo')
+    SERGIPE = 'Sergipe', _('Sergipe')
+    TOCANTINS = 'Tocantins', _('Tocantins')
