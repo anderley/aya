@@ -3,6 +3,8 @@ import os
 from pathlib import Path
 from decouple import config
 
+from import_export.formats.base_formats import CSV, XLSX
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -11,7 +13,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-49)5msntmsc%#00u@w0k-$mrq%dp^44yyi#(7%ts6j@wwq^bo&'
+SECRET_KEY = 'django-insecure-49)5msntmsc%#00u@w0k-$mrq%dp^44yyi#(7%ts6j@wwq^bo&' # noqa
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -31,8 +33,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # add-ons
     'crispy_forms',
-    "crispy_bootstrap5",
+    'crispy_bootstrap5',
+    'import_export',
     # modules
+    'audit',
+    'bancos',
     'categorias',
     'centro_custos',
     'contas_pagar',
@@ -42,6 +47,7 @@ INSTALLED_APPS = [
     'fluxo_caixa',
     'fornecedores',
     'main',
+    'motivos_exclusao',
     'tipo_lancamentos',
     'usuarios',
 ]
@@ -99,16 +105,16 @@ DATABASES = {
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator', # noqa
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator', # noqa
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator', # noqa
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator', # noqa
     },
 ]
 
@@ -151,7 +157,7 @@ LOGOUT_REDIRECT_URL = '/login/'
 
 # AWS S3 Configuration
 AWS_ACCESS_KEY_ID = config("AWS_ACCESS_KEY_ID", default="aws_access_key")
-AWS_SECRET_ACCESS_KEY = config("AWS_SECRET_ACCESS_KEY", default="aws_secret_key")
+AWS_SECRET_ACCESS_KEY = config("AWS_SECRET_ACCESS_KEY", default="aws_secret_key") # noqa
 AWS_STORAGE_BUCKET_NAME = config("AWS_STORAGE_BUCKET_NAME", default="aya")
 # AWS_S3_REGION_NAME = config("AWS_S3_REGION_NAME", default="us-east-1")
 # AWS_S3_CUSTOM_DOMAIN = f"{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com"
@@ -164,3 +170,6 @@ AWS_S3_URL = "http://localhost:9000/"
 DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
 # MEDIA_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/"
 MEDIA_URL = "http://localhost:9000/"
+
+IMPORT_FORMATS = [CSV, XLSX]
+EXPORT_FORMATS = [CSV, XLSX]

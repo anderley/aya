@@ -1,5 +1,4 @@
 from django import forms
-from django.contrib.auth.models import User
 
 from .models import Fornecedor
 
@@ -7,8 +6,8 @@ from .models import Fornecedor
 class FornecedorForm(forms.ModelForm):
 
     def save(self, commit=True):
-        if 'user_id' in self.initial:
-            self.instance.user = User(id=self.initial['user_id'])
+        if 'tenant_id' in self.initial:
+            self.instance.tenant_id = id=self.initial['tenant_id']
 
         return super().save(commit)
 

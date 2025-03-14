@@ -14,7 +14,7 @@ class EmpresasListView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         return super().get_queryset().filter(
-            user=self.request.user
+            tenant_id=self.request.user.userprofile.tenant_id
         ).order_by("-created_at")
 
 
@@ -25,7 +25,7 @@ class EmpresasCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     success_message = "Empresa cadastrada com sucesso."
 
     def post(self, request, *args, **kwargs):
-        self.initial["user_id"] = request.user.id
+        self.initial["tenant_id"] = request.user.userprofile.tenant_id
 
         return super().post(request, *args, **kwargs)
     

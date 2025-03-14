@@ -14,31 +14,37 @@ class FornecedoresListView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         return super().get_queryset().filter(
-            user=self.request.user
+            tenant_id=self.request.user.userprofile.tenant_id
         ).order_by("-created_at")
 
 
-class FornecedoresCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
+class FornecedoresCreateView(
+    LoginRequiredMixin, SuccessMessageMixin, CreateView
+):
     form_class = FornecedorForm
     template_name = "fornecedores/form.html"
     success_url = reverse_lazy("listar_fornecedores")
     success_message = "Fornecedor cadastradp com sucesso."
 
     def post(self, request, *args, **kwargs):
-        self.initial["user_id"] = request.user.id
+        self.initial["tenant_id"] = request.user.userprofile.tenant_id
 
         return super().post(request, *args, **kwargs)
-    
 
-class FornecedoresUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
+
+class FornecedoresUpdateView(
+    LoginRequiredMixin, SuccessMessageMixin, UpdateView
+):
     model = Fornecedor
     form_class = FornecedorForm
     template_name = "fornecedores/form.html"
     success_url = reverse_lazy("listar_fornecedores")
     success_message = "Fornecedor atualizado com sucesso."
-    
 
-class FornecedoresDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
+
+class FornecedoresDeleteView(
+    LoginRequiredMixin, SuccessMessageMixin, DeleteView
+):
     model = Fornecedor
     template_name = "fornecedores/confirmar_exclusao.html"
     success_url = reverse_lazy("listar_fornecedores")

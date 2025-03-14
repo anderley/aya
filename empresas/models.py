@@ -5,7 +5,7 @@ from main.models import Estados
 
 
 class Empresa(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    tenant_id = models.UUIDField(db_index=True)
     nome = models.CharField(max_length=50, verbose_name='Nome')
     cnpj = models.CharField(max_length=18, unique=True, verbose_name='CNPJ')
     nome_razao_social = models.CharField(max_length=100, unique=True, verbose_name='Razão Social')
@@ -32,5 +32,5 @@ class Empresa(models.Model):
         verbose_name = 'empresa'
         verbose_name_plural = 'empresas'
         constraints = [
-            models.UniqueConstraint(fields=['user', 'cnpj'], name='unique_empresa_user') # noqa
+            models.UniqueConstraint(fields=['tenant_id', 'cnpj'], name='unique_empresa_tenant') # noqa
         ]

@@ -56,46 +56,51 @@
             <div class="offcanvas-body d-md-flex flex-column p-0 pt-lg-3 overflow-y-auto">
               <ul class="nav flex-column">
                 <li class="nav-item">
+                  <a class="nav-link d-flex align-items-center gap-2" href="{% url 'listar_auditorias' %}">
+                    <i class="fa-solid fa-certificate"></i>
+                    Auditoria
+                  </a>
+                <li class="nav-item">
+                  <a class="nav-link d-flex align-items-center gap-2" href="#">
+                    <i class="fa-solid fa-scale-balanced"></i>
+                    Balanço Financeiro
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link d-flex align-items-center gap-2" aria-current="page" href="{% url 'listar_contas_pagar' %}">
+                    <i class="fa-solid fa-receipt"></i>
+                    Contas a Pagar
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link d-flex align-items-center gap-2" href="{% url 'listar_contas_receber' %}">
+                    <i class="fa-solid fa-wallet"></i>
+                    Contas a Receber
+                  </a>
+                </li>
+                <li class="nav-item">
                   <a class="nav-link d-flex align-items-center gap-2" href="#">
                     <i class="fa-solid fa-chart-line"></i>
                     Dashboard
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link d-flex align-items-center gap-2" aria-current="page" href="{% url 'listar_contas_pagar' %}">
-                    <i class="fa-solid fa-file-invoice"></i>
-                    Contas a Pagar
+                  <a class="nav-link d-flex align-items-center gap-2" href="{% url 'view_dre' %}">
+                    <i class="fa-solid fa-money-check-dollar"></i>
+                    DRE
                   </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link d-flex align-items-center gap-2" href="{% url 'listar_contas_receber' %}">
-                    <i class="fa-solid fa-file-invoice-dollar"></i>
-                    Contas a Receber
-                  </a>
-                </li>
                 <li class="nav-item">
                   <a class="nav-link d-flex align-items-center gap-2" aria-current="page" href="{% url 'listar_empresas' %}">
-                    <i class="fa-regular fa-building"></i>
+                    <i class="fa-solid fa-city"></i>
                     Empresas
                   </a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link d-flex align-items-center gap-2" aria-current="page" href="{% url 'listar_fornecedores' %}">
-                    <i class="fa-solid fa-truck-field"></i>
+                    <i class="fa-solid fa-boxes-packing"></i>
                     Fornecedores
                   </a>
                 </li>
-                <li class="nav-item">
-                  <a class="nav-link d-flex align-items-center gap-2" href="{% url 'view_dre' %}">
-                    <i class="fa-solid fa-file-invoice-dollar"></i>
-                    DRE
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link d-flex align-items-center gap-2" href="#">
-                    <i class="fa-solid fa-file-invoice-dollar"></i>
-                    Balanço Financeiro
-                  </a>
                 </li>
               </ul>
             </div>

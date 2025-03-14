@@ -13,6 +13,22 @@
             <div class="container-fluid">
                 <div class="col-6 d-flex">
                     <div class="col-auto me-2">
+                      <select name="empresa" id="id_empresa" class="form-select form-select-sm" aria-label="Default select example">
+                        <option value="">Selecione Empresa</option>
+                        {% for empresa in empresas %}
+                          <option value="{{ empresa.pk }}" {% if empresa.pk|stringformat:"s" == request.GET.empresa %} selected {% endif %}>{{ empresa.nome }}</option>
+                        {% endfor %}
+                      </select>
+                    </div>
+                    <div class="col-auto me-2">
+                      <select name="fornecedor" id="id_fornecedor" class="form-select form-select-sm" aria-label="Default select example">
+                        <option value="">Selecione Fornecedor</option>
+                        {% for fornecedor in fornecedores %}
+                          <option value="{{ fornecedor.pk }}" {% if fornecedor.pk|stringformat:"s" == request.GET.fornecedor %} selected {% endif %}>{{ fornecedor.nome }}</option>
+                        {% endfor %}
+                      </select>
+                    </div>
+                    <div class="col-auto me-2">
                       <select name="categoria" id="id_categoria" class="form-select form-select-sm" aria-label="Default select example">
                         <option value="">Selecione Categoria</option>
                         {% for categoria in categorias %}
@@ -20,7 +36,7 @@
                         {% endfor %}
                       </select>
                     </div>
-                    <div class="col-6 col-auto me-2">
+                    <div class="col-auto me-2">
                         <select name="centro_custo" id="id_centro_custo" class="form-select form-select-sm" aria-label="Default select example">
                           <option value="">Selecione Centro de Custo</option>
                           {% for centro_custo in centro_custos %}
@@ -28,8 +44,22 @@
                           {% endfor %}
                         </select>
                     </div>
+                    <div class="col-auto me-2">
+                        <label for="id_data_vencimento_ini" class="col-form-label">Vencimento:</label>
+                    </div>
+                    <div class="col-auto me-2">
+                        <input name="data_vencimento_ini" type="date" id="id_data_vencimento_ini" class="form-control form-control-sm py-0" placeholder="Início" value="{{ request.GET.data_vencimento_ini }}" />
+                    </div>
+                    <div class="col-auto me-2">
+                        <label for="id_data_vencimento_end" class="col-form-label">até</label>
+                    </div>
+                    <div class="col-auto me-2">
+                        <input name="data_vencimento_end" type="date" id="id_data_vencimento_end" class="form-control form-control-sm py-0" placeholder="Fim"  value="{{ request.GET.data_vencimento_end }}" />
+                    </div>
                     <div class="col-auto">
-                        <button type="submit" class="btn btn-sm btn-secondary">Filtrar</button>
+                        <button type="submit" class="btn btn-sm btn-secondary">
+                            <i class="fa-solid fa-filter"></i> Filtrar
+                        </button>
                     </div>
                 </div>
                 <div class="d-flex justify-content-end">
@@ -60,7 +90,7 @@
                         <th scope="col">Moeda Estrangeira</th>
                         <th scope="col">Cotaçao</th>
                         <th scope="col">Data Vencimento</th>
-                        <th scope="col">Conta Corrente</th>
+                        <th scope="col">Banco</th>
                         <th scope="col">Projeto</th>
                         <th scope="col">Forma Pagamento</th>
                         <th scope="col">Num. Documento</th>
@@ -77,13 +107,13 @@
                             <td>{{ conta_pagar.empresa }}</td>
                             <td>{{ conta_pagar.fornecedor }}</td>
                             <td>{{ conta_pagar.categoria }}</td>
-                            <td>{{ conta_pagar.centro_custo }}</td>
+                            <td>{{ conta_pagar.centro_custo|default:'-' }}</td>
                             <td>{{ conta_pagar.data_emissao|date:'d/m/Y' }}</td>
                             <td>{{ conta_pagar.valor|floatformat:2 }}</td>
                             <td>{{ conta_pagar.valor_moeda_estrangeira|floatformat:2 }}</td>
                             <td>{{ conta_pagar.valor_cotacao|floatformat:2 }}</td>
                             <td>{{ conta_pagar.data_vencimento|date:'d/m/Y' }}</td>
-                            <td>{{ conta_pagar.conta_corrente }}</td>
+                            <td>{{ conta_pagar.banco|default:'-' }}</td>
                             <td>{{ conta_pagar.projeto }}</td>
                             <td>{{ conta_pagar.forma_pagamento }}</td>
                             <td>{{ conta_pagar.num_documento }}</td>
@@ -166,10 +196,23 @@
                     <div class="modal-content">
                         <div class="modal-body">
                             <p>Confirma a exclusão dos itens selecionados.</p>
+                            <div class="container-fluid">
+                                <div class="col-auto me-2">
+                                    <select name="motivo_exclusao" id="id_motivo_exclusao" class="form-select form-select-sm" aria-label="Default select example">
+                                      {% for motivo_exclusao in motivos_exclusao %}
+                                        <option value="{{ motivo_exclusao.pk }}">{{ motivo_exclusao.descricao }}</option>
+                                      {% endfor %}
+                                    </select>
+                                  </div>
+                            </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                            <button type="submit" class="btn btn-primary">Confirmar</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                <i class="fa-solid fa-ban"></i> Cancelar
+                            </button>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fa-solid fa-check"></i> Confirmar
+                            </button>
                         </div>
                     </div>
                 </div>
