@@ -1,9 +1,8 @@
 from django.contrib import admin
-
 from import_export.admin import ImportExportModelAdmin
 
-from .resources import CentroCustosResource
 from .models import CentroCusto
+from .resources import CentroCustosResource
 
 
 class CentroCustoAdmin(ImportExportModelAdmin):

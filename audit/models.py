@@ -6,7 +6,6 @@ from motivos_exclusao.models import MotivoExclusao
 
 class Auditoria(models.Model):
 
-
     class Acao(models.TextChoices):
         CRIADO = "Criado", _("Criado")
         EDITADO = "Editado", _("Editado")
@@ -14,9 +13,12 @@ class Auditoria(models.Model):
 
     tenant_id = models.UUIDField(db_index=True)
     acao = models.CharField(
-        max_length=10, choices=Acao.choices, default=Acao.CRIADO, verbose_name="Ação"
+        max_length=10, choices=Acao.choices,
+        default=Acao.CRIADO, verbose_name="Ação"
     )
-    motivo = models.ForeignKey(MotivoExclusao, on_delete=models.DO_NOTHING, verbose_name="Motivo")
+    motivo = models.ForeignKey(
+        MotivoExclusao, on_delete=models.DO_NOTHING, verbose_name="Motivo"
+    )
     registro = models.JSONField(verbose_name="Registro")
     usuario = models.CharField(max_length=100, verbose_name="Usuário")
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Criado")

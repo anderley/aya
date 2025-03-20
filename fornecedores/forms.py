@@ -7,7 +7,7 @@ class FornecedorForm(forms.ModelForm):
 
     def save(self, commit=True):
         if 'tenant_id' in self.initial:
-            self.instance.tenant_id = id=self.initial['tenant_id']
+            self.instance.tenant_id = self.initial['tenant_id']
 
         return super().save(commit)
 

@@ -14,6 +14,9 @@
             <div class="col-md-8">
                 <form class="row g-2" method="post" enctype="multipart/form-data">
                     {% csrf_token %}
+                    {% if form.parcela_principal %}
+                        {{ form.parcela_principal|as_crispy_field }}
+                    {% endif %}
                     <div class="col-md-8">
                         {{ form.empresa|as_crispy_field }}
                     </div>
@@ -78,20 +81,31 @@
     <script src="{% static 'js/jquery.mask.min.js' %}"></script>
 
     <script>
-        $(document).ready(function  () {
+        $(document).ready(function () {
+            const today = new Date().toISOString().split("T")[0];
+            $('#id_data_emissao').attr('max', today);
+
             $('#id_valor').mask('000.000.000.000.000,00', {reverse: true});
             $('#id_valor_moeda_estrangeira').mask('000,000,000,000,000.00', {reverse: true});
             $('#id_valor_cotacao').mask('000.00', {reverse: true});
 
-            let data_emissao = $('#id_data_emissao').attr('value');
-            $('#id_data_emissao').attr('value', data_emissao.replace(/(\d{2})\/(\d{2})\/(\d{4})/g,'$3-$2-$1'));
+            const data_emissao = $('#id_data_emissao').attr('value');
 
-            let data_vencimento = $('#id_data_vencimento').attr('value');
-            $('#id_data_vencimento').attr('value', data_vencimento.replace(/(\d{2})\/(\d{2})\/(\d{4})/g,'$3-$2-$1'));
+            if(data_emissao) {
+                $('#id_data_emissao').attr('value', data_emissao.replace(/(\d{2})\/(\d{2})\/(\d{4})/g,'$3-$2-$1'));
+            }
 
-            let data_pagamento = $('#id_data_pagamento').attr('value');
-            $('#id_data_pagamento').attr('value', data_pagamento.replace(/(\d{2})\/(\d{2})\/(\d{4})/g,'$3-$2-$1'));
+            const data_vencimento = $('#id_data_vencimento').attr('value');
 
+            if(data_vencimento) {
+                $('#id_data_vencimento').attr('value', data_vencimento.replace(/(\d{2})\/(\d{2})\/(\d{4})/g,'$3-$2-$1'));
+            }
+
+            const data_pagamento = $('#id_data_pagamento').attr('value');
+
+            if(data_pagamento) {
+                $('#id_data_pagamento').attr('value', data_pagamento.replace(/(\d{2})\/(\d{2})\/(\d{4})/g,'$3-$2-$1'));
+            }
         });
     </script>
 {% endblock %}

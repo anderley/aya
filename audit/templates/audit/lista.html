@@ -7,6 +7,56 @@
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h1 class="h2">Auditorias</h1>
     </div>
+    <form method="get" >
+        <input type="hidden" name="page" value="{{ request.GET.page }}"/>
+        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+            <div class="container-fluid">
+                <div class="col-6 d-flex">
+                    <div class="col-auto me-2">
+                      <select name="acao" id="id_acao" class="form-select form-select-sm" aria-label="Default select example">
+                        <option value="">Selecione Ação</option>
+                        {% for acao in acoes %}
+                          <option value="{{ acao.0 }}" {% if acao.0 == request.GET.acao %} selected {% endif %}>{{ acao.1 }}</option>
+                        {% endfor %}
+                      </select>
+                    </div>
+                    <div class="col-auto me-2">
+                      <select name="usuario" id="id_usuario" class="form-select form-select-sm" aria-label="Default select example">
+                        <option value="">Selecione Usuário</option>
+                        {% for usuario in usuarios %}
+                          <option value="{{ usuario.email }}" {% if usuario.email == request.GET.usuario %} selected {% endif %}>{{ usuario.email }}</option>
+                        {% endfor %}
+                      </select>
+                    </div>
+                    <div class="col-auto me-2">
+                      <select name="motivo" id="id_motivo" class="form-select form-select-sm" aria-label="Default select example">
+                        <option value="">Selecione Motivo</option>
+                        {% for motivo in motivos_exclusao %}
+                          <option value="{{ motivo.pk }}" {% if motivo.pk|stringformat:"s" == request.GET.motivo %} selected {% endif %}>{{ motivo.descricao }}</option>
+                        {% endfor %}
+                      </select>
+                    </div>
+                    <div class="col-auto me-2">
+                        <label for="id_data_ini" class="col-form-label">Data:</label>
+                    </div>
+                    <div class="col-auto me-2">
+                        <input name="data_ini" type="date" id="id_data_ini" class="form-control form-control-sm py-0" placeholder="Início" value="{{ request.GET.data_ini }}" />
+                    </div>
+                    <div class="col-auto me-2">
+                        <label for="id_data_end" class="col-form-label">até</label>
+                    </div>
+                    <div class="col-auto me-2">
+                        <input name="data_end" type="date" id="id_data_end" class="form-control form-control-sm py-0" placeholder="Fim"  value="{{ request.GET.data_end }}" />
+                    </div>
+                    <div class="col-auto">
+                        <button type="submit" class="btn btn-sm btn-secondary">
+                            <i class="fa-solid fa-filter"></i> Filtrar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </form>
     <div class="table-responsive small">
         <table class="table table-striped table-sm">
             <thead>
@@ -26,7 +76,7 @@
                         <td>{{ auditoria.acao }}</td>
                         <td>{{ auditoria.usuario }}</td>
                         <td>{{ auditoria.motivo }}</td>
-                        <td>{{ auditoria.registro }}</td>
+                        <td>{{ auditoria.registro|safe }}</td>
                         <td>{{ auditoria.created_at|date:'d/m/Y' }}</td>
                     </tr>
                 {% endfor %}

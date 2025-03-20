@@ -1,8 +1,7 @@
 import os
-
 from pathlib import Path
-from decouple import config
 
+from decouple import config
 from import_export.formats.base_formats import CSV, XLSX
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -60,7 +59,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'usuarios.middleware.CurrentUserMiddleware',
 ]
+
 
 ROOT_URLCONF = 'app.urls'
 

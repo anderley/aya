@@ -1,10 +1,10 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
+from django.views.generic import CreateView, DeleteView, ListView, UpdateView
 
-from .models import Empresa
 from .forms import EmpresaForm
+from .models import Empresa
 
 
 class EmpresasListView(LoginRequiredMixin, ListView):
@@ -28,7 +28,7 @@ class EmpresasCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
         self.initial["tenant_id"] = request.user.userprofile.tenant_id
 
         return super().post(request, *args, **kwargs)
-    
+
 
 class EmpresasUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     model = Empresa
@@ -36,7 +36,7 @@ class EmpresasUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     template_name = "empresas/form.html"
     success_url = reverse_lazy("listar_empresas")
     success_message = "Empresa atualizado com sucesso."
-    
+
 
 class EmpresasDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
     model = Empresa
