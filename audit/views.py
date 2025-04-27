@@ -2,7 +2,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.views.generic import ListView
 
-from motivos_exclusao.models import MotivoExclusao
+from core.models import MotivoExclusao
 
 from .models import Auditoria
 

@@ -4,9 +4,9 @@ from django.core.validators import MaxValueValidator
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
-from bancos.models import Banco
-from categorias.models import Categoria
-from centro_custos.models import CentroCusto
+from core.models import(
+    Banco, Categoria,CentroCusto
+)
 from empresas.models import Empresa
 from fornecedores.models import Fornecedor
 

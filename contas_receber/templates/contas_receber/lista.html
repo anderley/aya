@@ -63,16 +63,16 @@
                     </div>
                     <div class="col-auto">
                         <button type="submit" class="btn btn-sm btn-secondary">
-                            <i class="fa-solid fa-filter"></i> Filtrar
+                            <i class="bi bi-funnel-fill"></i> Filtrar
                         </button>
                     </div>
                 </div>
                 <div class="d-flex justify-content-end">
                     <button class="btn btn-danger btn-sm me-2" data-bs-toggle="modal" type="button" data-bs-target="#deletarItems">
-                        <i class="fa-solid fa-trash"></i> Deletar Selecionados
+                        <i class="bi bi-trash2-fill"></i> Deletar Selecionados
                     </button>
                     <a class="btn btn-primary btn-sm" href="{% url 'incluir_conta_receber' %}">
-                        <i class="fa-solid fa-plus"></i> Incluir
+                        <i class="bi bi-plus"></i> Incluir
                     </a>
                 </div>
             </div>
@@ -91,7 +91,7 @@
                         <th scope="col">Categoria</th>
                         <th scope="col">Centro de Custo</th>
                         <th scope="col">Data Emissão</th>
-                        <th scope="col">Valor</th>
+                        <th scope="col">Valor Parcela</th>
                         <th scope="col">Moeda Estrangeira</th>
                         <th scope="col">Cotaçao</th>
                         <th scope="col">Data Vencimento</th>
@@ -126,10 +126,10 @@
                             <td>{{ conta_receber.data_pagamento|date:'d/m/Y' }}</td>
                             <td>
                                 <a class="btn btn-outline-secondary btn-sm" href="{% url 'editar_conta_receber' conta_receber.pk %}">
-                                    <i class="fa fa-pencil"></i>
+                                    <i class="bi bi-pencil-fill"></i>
                                 </a>
                                 <a class="btn btn-outline-danger btn-sm" href="{% url 'deletar_conta_receber' conta_receber.pk %}">
-                                    <i class="fa fa-trash"></i>
+                                    <i class="bi bi-trash2-fill"></i>
                                 </a>
                             </td>
                         </tr>
@@ -141,23 +141,23 @@
                     {% if page_obj.has_previous %}
                     <li class="page-item">
                         <a class="page-link" href="?page=1">
-                            <i class="fa-solid fa-angles-left"></i>
+                            <i class="bi bi-chevron-double-left"></i>
                         </a>
                     </li>
                         <li class="page-item">
                             <a class="page-link" href="?page={{ page_obj.previous_page_number }}">
-                                <i class="fa-solid fa-chevron-left"></i>
+                                <i class="bi bi-chevron-left"></i>
                             </a>
                         </li>
                     {% else %}
                         <li class="page-item disabled">
                             <a class="page-link">
-                                <i class="fa-solid fa-angles-left"></i>
+                                <i class="bi bi-chevron-double-left"></i>
                             </a>
                         </li>
                         <li class="page-item disabled">
                             <a class="page-link">
-                                <i class="fa-solid fa-chevron-left"></i>
+                                <i class="bi bi-chevron-left"></i>
                             </a>
                         </li>
                     {% endif %}
@@ -173,23 +173,23 @@
                     {% if page_obj.has_next %}
                         <li class="page-item">
                             <a class="page-link" href="?page={{ page_obj.next_page_number }}">
-                                <i class="fa-solid fa-chevron-right"></i>
+                                <i class="bi bi-chevron-right"></i>
                             </a>
                         </li>
                         <li class="page-item">
                             <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">
-                                <i class="fa-solid fa-angles-right"></i>
+                                <i class="bi bi-chevron-double-right"></i>
                             </a>
                         </li>
                     {% else %}
                         <li class="page-item disabled">
                             <a class="page-link">
-                                <i class="fa-solid fa-chevron-right"></i>
+                                <i class="bi bi-chevron-right"></i>
                             </a>
                         </li>
                         <li class="page-item disabled">
                             <a class="page-link">
-                                <i class="fa-solid fa-angles-right"></i>
+                                <i class="bi bi-chevron-double-right"></i>
                             </a>
                         </li>
                     {% endif %}
@@ -214,10 +214,10 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                            <i class="fa-solid fa-ban"></i> Cancelar
+                            <i class="bi bi-ban"></i> Cancelar
                         </button>
                         <button type="submit" class="btn btn-primary">
-                            <i class="fa-solid fa-check"></i> Confirmar
+                            <i class="bi bi-check2"></i> Confirmar
                         </button>
                     </div>
                 </div>

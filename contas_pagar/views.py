@@ -11,12 +11,10 @@ from django.urls import reverse_lazy
 from django.views.generic import CreateView, DeleteView, ListView, UpdateView
 
 from audit.models import Auditoria
-from categorias.models import Categoria
-from centro_custos.models import CentroCusto
+from core.models import Categoria, CentroCusto, MotivoExclusao
 from empresas.models import Empresa
 from fluxo_caixa.models import FluxoCaixa
 from fornecedores.models import Fornecedor
-from motivos_exclusao.models import MotivoExclusao
 
 from .forms import (ContaPagarDeleteForm, ContaPagarForm, ContaPagarUpdateForm,
                     ItemDeleteForm)

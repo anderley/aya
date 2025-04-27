@@ -36,18 +36,15 @@ INSTALLED_APPS = [
     'import_export',
     # modules
     'audit',
-    'bancos',
-    'categorias',
-    'centro_custos',
+    'core',
     'contas_pagar',
     'contas_receber',
     'dre',
     'empresas',
+    'estoques',
     'fluxo_caixa',
     'fornecedores',
     'main',
-    'motivos_exclusao',
-    'tipo_lancamentos',
     'usuarios',
 ]
 

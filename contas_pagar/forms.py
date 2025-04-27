@@ -2,13 +2,10 @@ from datetime import timedelta
 
 from django import forms
 
-from bancos.models import Banco
-from categorias.models import Categoria
-from centro_custos.models import CentroCusto
+from core.models import Banco, Categoria, CentroCusto, MotivoExclusao
 from empresas.models import Empresa
 from fluxo_caixa.models import FluxoCaixa
 from fornecedores.models import Fornecedor
-from motivos_exclusao.models import MotivoExclusao
 
 
 class ContaPagarForm(forms.ModelForm):
@@ -38,7 +35,7 @@ class ContaPagarForm(forms.ModelForm):
         widget=forms.DateInput(format="%d/%m/%Y", attrs={"type": "date"}),
         label="Data Emissão"
     )
-    valor = forms.CharField(max_length=22, label="Valor")
+    valor = forms.CharField(max_length=22, label="Valor Parcela")
     valor_moeda_estrangeira = forms.CharField(
         max_length=22, required=False, label="Moeda Estrangeira"
     )
@@ -135,7 +132,7 @@ class ContaPagarForm(forms.ModelForm):
 
     class Meta:
         model = FluxoCaixa
-        exclude = ["num_parcela"]
+        exclude = ["num_parcela", "parcela_principal"]
 
 
 class ContaPagarUpdateForm(forms.ModelForm):

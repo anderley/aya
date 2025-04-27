@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
-from motivos_exclusao.models import MotivoExclusao
+from core.models import MotivoExclusao
 
 
 class Auditoria(models.Model):
