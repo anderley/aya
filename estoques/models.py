@@ -16,9 +16,6 @@ class Estoque(models.Model):
         null=True, blank=True, verbose_name="Deletado Em"
     )
 
-    def __str__(self):
-        return self.nome
-
     class Meta:
         db_table = "estoques"
         verbose_name = "estoque"

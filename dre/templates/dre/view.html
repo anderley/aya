@@ -61,7 +61,7 @@
                 </tr>
                 {% for row in row.tipo_lancamentos %}
                   <tr class="{{ indicador_id }} collapse">
-                    <td scope="col" class="ps-3">{{ row.tipo_lancamento }}</td>
+                    <td scope="col" class="ps-5">{{ row.tipo_lancamento }}</td>
                     {% for column in row.meses %}
                       <td scope="col" class="{% if column.valor < 0 %} text-danger {% else%} text-primary-emphasis {% endif%}">{{ column.valor }}</td>
                       <td scope="col" class="{% if column.av < 0 %} text-danger {% else%} text-primary-emphasis {% endif%}">{{ column.av }}</td>

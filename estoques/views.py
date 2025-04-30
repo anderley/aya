@@ -110,7 +110,7 @@ class EstoqueListView(LoginRequiredMixin, ListView):
                 competencia__lte=self.request.GET["competencia_end"]
             )
 
-        return queryset
+        return queryset.order_by("competencia")
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -137,3 +137,23 @@ class EstoqueUpdateView(
         kwargs['tenant_id'] = self.request.user.userprofile.tenant_id
 
         return kwargs
+
+    def get_initial(self):
+        initial = super().get_initial()
+        estoque = self.get_object()
+
+        initial["ano"] = estoque.competencia.year
+        initial["mes"] = estoque.competencia.month
+
+        return initial
+    
+    def form_invalid(self, form):
+        print("passando form_invalid");
+        for e in form.non_field_errors():
+            print(e)
+            print("unique_empresa_mes_estoque" in e)
+            if "unique_empresa_primary_estoque" in e:
+                messages.error(self.request, "Primeiro estoque já registrado para essa empresa!")
+            elif "unique_empresa_mes_estoque" in e:
+                messages.error(self.request, "Estoque já registrado para esse mês e empresa!")
+        return super().form_invalid(form)
