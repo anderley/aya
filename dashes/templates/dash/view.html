@@ -1,0 +1,308 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+  <div class="container-fluid p-4">
+    <div class="row align-items-center mb-4">
+      <div class="col-md-2"></div>
+      <div class="col-md-2">
+        <h2 class="fw-bold">Faturamento Bruto</h2>
+        <div class="data-value">R$ 2.121.640</div>
+      </div>
+      <div class="col-md-2">
+        <label>Unidade:</label>
+        <select class="form-select form-select-sm">
+          <option selected>Todas</option>
+        </select>
+      </div>
+      <div class="d-flex col-md-4">
+        <div class="btn-group btn-group-sm mt-4" role="group" aria-label="Basic radio toggle button group">
+          <input type="radio" class="btn-check" name="competencia" id="competencia1" autocomplete="off" value="data_emissao" {% if not request.GET.competencia or request.GET.competencia == "data_emissao" %} checked {% endif %}>
+          <label class="btn btn-outline-secondary" for="competencia1">Competência</label>
+        
+          <input type="radio" class="btn-check" name="competencia" id="competencia2" autocomplete="off" value="data_pagamento" {% if request.GET.competencia == "data_pagamento" %} checked {% endif %}>
+          <label class="btn btn-outline-secondary" for="competencia2">Caixa</label>
+        
+          <input type="radio" class="btn-check" name="competencia" id="competencia3" autocomplete="off" value="data_vencimento" {% if request.GET.competencia == "data_vencimento" %} checked {% endif %}>
+          <label class="btn btn-outline-secondary" for="competencia3">Projetada</label>
+        </div>
+        <input name="data_ini" type="date" id="id_data_ini" class="form-control form-control-sm py-0 ms-2 mt-4" placeholder="Início" />
+        <input name="data_final" type="date" id="id_data_final" class="form-control form-control-sm py-0 ms-2 mt-4" placeholder="Fim" />
+      </div>
+      <div class="col-md-2">
+        <label>Projeto:</label>
+        <select class="form-select form-select-sm">
+          <option selected>Todos</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="row text-center mb-4">
+      <div class="col-md-2"></div>
+      <div class="col-md-2">
+        <div class="card border-0 p-3">
+          <div class="card-body">
+            <h5 class="card-title">Margem de Contribuição</h5>
+            <h4 class="card-title">R$ 1.958.228</h4>
+            <div class="card-text fw-bold">92%</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-2">
+        <div class="card border-0 p-3">
+          <div class="card-body">
+            <h5 class="card-title">Outras Receitas</h5>
+            <h4 class="card-title">R$ 214.228</h4>
+            <div class="card-text fw-bold">10%</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-2">
+        <div class="card border-0 p-3">
+          <div class="card-body">
+            <h5 class="card-title">Saldo do Período</h5>
+            <h4 class="card-title text-danger">-R$ 392.436</h4>
+            <div class="card-text fw-bold">89%</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-2">
+        <div class="card border-0 p-3">
+          <div class="card-body">
+            <h5 class="card-title">Resultado Operacional</h5>
+            <h4 class="card-title">R$ 1.681.040</h4>
+            <div class="card-text fw-bold">79%</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+
+      <div class="col-md-2">
+        <div class="card p-3 mb-2 dash-card-bg-color border-0">
+          <h5 class="card-title">Despesa Operacional</h5>
+          <h4 class="text-danger">-R$ 273.796</h4>
+          <h5 class="small-text">13%</h5>
+        </div>
+        <div class="card p-3 mb-2  dash-card-bg-color border-0">
+          <h5 class="card-title">Despesas Variáveis</h5>
+          <h4 class="text-danger">-R$ 163.412</h4>
+          <h5 class="small-text">8%</h5>
+        </div>
+        <div class="card p-3 mb-2  dash-card-bg-color border-0">
+          <h5 class="card-title">Despesas Não Operacionais</h5>
+          <h5 class="small-text">(Em branco)</h5>
+        </div>
+        <div class="card p-3 mb-2 dash-card-bg-color border-0">
+          <h5 class="card-title">Investimento</h5>
+          <h5 class="small-text">(Em branco)</h5>
+        </div>
+        <div class="card p-3 mb-2 dash-card-bg-color border-0">
+          <h5 class="card-title">Endividamento</h5>
+          <h5 class="small-text">(Em branco)</h5>
+        </div>
+      </div>
+
+      <div class="col-md-8">
+        <div class="card p-3 mb-2">
+          <div class="card-title-small">Histórico de Faturamento</div>
+          <div class="bar-placeholder text-center">
+            <canvas id="historicoFaturamentoChart" height="150"></canvas>
+          </div>
+        </div>
+        <div class="card p-3">
+          <div class="card-title-small">Despesas por Indicador</div>
+          <div class="bar-placeholder text-center">
+            <canvas id="despesasIndicadorChart" height="150"></canvas>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="col-md-2">
+        <div class="card p-3 mb-2">
+          <h5 class="card-title">Meta Anual</h5>
+          <canvas id="metaAnualChart" width="100"></canvas>
+          <div class="center-text">212,2%</div>
+        </div>
+        <div class="card p-3 mb-2">
+          <h5 class="card-title">Despesas Variáveis</h5>
+          <canvas id="despesasVariaveisChart" width="100"></canvas>
+          <div class="center-text">7,7%</div>
+        </div>
+        <div class="card p-3 mb-2">
+          <h5 class="card-title">Despesas Operacionais</h5>
+          <canvas id="despesasOperacionaisChart" width="100"></canvas>
+          <div class="center-text">12,9%</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+{% endblock %}
+
+{% block js %}
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+
+  <script>
+    const barChartOptions = {
+      scales: {
+        x: {
+          grid: {
+            display: false
+          }
+        },
+        y: {
+          beginAtZero: true,
+          display: false
+        }
+      },
+      plugins: {
+        datalabels: {
+          formatter: function(value) {
+            return value && 'R$ ' + value.toLocaleString('pt-BR', {
+              minimumFractionDigits: 2
+            });
+          },
+          anchor: 'end',
+          align: 'top',
+          color: '#333',
+          font: {
+            weight: 'bold'
+          }
+        },
+        legend: {
+          display: true
+        }
+      }
+    };
+    const histFaturamentoChart = document.getElementById("historicoFaturamentoChart").getContext('2d');    ;
+
+    new Chart(histFaturamentoChart, {
+      type: 'bar',
+      data: {
+        labels: [
+          "janeiro", "fevereiro", "março", "abril", "maio", "junho", "julho",
+          "agosto", "setembro", "outubro", "novembro", "dezembro"
+        ],
+        datasets: [
+          {
+            label: "2025",
+            data: [329611, 193488, 182757, 164620, 109025, 262716, 243751, 142257],
+            backgroundColor: [
+              "rgb(20 126 134)"
+            ],
+            borderWidth: 1
+          },
+          {
+            label: "2026",
+            data: [null, null, null, null, null, null, null, 21624, 117705, 111814, 102515, 134797],
+            backgroundColor: [
+              "rgb(80 203 143)"
+            ],
+            borderWidth: 1
+          }
+        ]
+      },
+      options: barChartOptions,
+      plugins: [ChartDataLabels]
+    });
+
+    const despIndicadorChart = document.getElementById("despesasIndicadorChart");
+    
+    new Chart(despIndicadorChart, {
+      type: 'bar',
+      data: {
+        labels: ["IMPOSTOS SOBRE VENDA", "DESPESAS COMERCIAS", "DESPESAS NÃO DESEMBOLSAVEIS", "CUSTO MERCADORIA VENDIDA", "DESPESAS VARIÁVEIS", "DESPESAS OPERACIONAIS"],
+        datasets: [{
+          label: "",
+          data: [-2316.85, -3391.79, -3940.52, -29194, -131901.03, -273795.89],
+          backgroundColor: [
+            "rgb(140 33 35)"
+          ],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        ...barChartOptions,
+        plugins: {
+          datalabels: {
+            formatter: function(value) {
+              return value && 'R$ ' + value.toLocaleString('pt-BR', {
+                minimumFractionDigits: 2
+              });
+            },
+            anchor: 'start',
+            align: 'bottom',
+            color: '#333',
+            font: {
+              weight: 'bold'
+            }
+          },
+          legend: {
+            display: false
+          }
+        }
+      },
+      plugins: [ChartDataLabels]
+    });
+
+    const halfChartOptions = {
+        rotation: -90,
+        circumference: 180,
+        cutout: '50%',
+        plugins: {
+          legend: {
+            display: false
+          }
+        }
+      }
+    const metaAnualChart = document.getElementById('metaAnualChart');
+
+    new Chart(metaAnualChart, {
+      type: 'doughnut',
+      data: {
+        labels: [],
+        datasets: [{
+          data: [212, 0],
+          backgroundColor: ['#4bc0c0', '#e0e0e0'],
+          borderWidth: 0,
+        }]
+      },
+      options: halfChartOptions
+    });
+    const despesasVariaveisChart = document.getElementById('despesasVariaveisChart');
+
+    new Chart(despesasVariaveisChart, {
+      type: 'doughnut',
+      data: {
+        labels: [],
+        datasets: [{
+          data: [7.7, 92.3],
+          backgroundColor: ['#4bc0c0', '#e0e0e0'],
+          borderWidth: 0
+        }]
+      },
+      options: halfChartOptions
+    });
+    const despesasOperacionaisChart = document.getElementById('despesasOperacionaisChart');
+
+    new Chart(despesasOperacionaisChart, {
+      type: 'doughnut',
+      data: {
+        labels: [],
+        datasets: [{
+          data: [12.9, 87.1],
+          backgroundColor: ['#4bc0c0', '#e0e0e0'],
+          borderWidth: 0
+        }]
+      },
+      options: halfChartOptions
+    });
+  </script>
+{% endblock %}

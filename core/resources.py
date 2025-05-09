@@ -63,4 +63,4 @@ class IndicadorResource(resources.ModelResource):
     class Meta:
         model = Indicador
         import_id_fields = ["id"]
-        fields = ["id", "descricao"]
+        fields = ["id", "descricao", "tipo"]

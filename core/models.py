@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 
 
 class Banco(models.Model):
@@ -16,14 +17,23 @@ class Banco(models.Model):
 
 
 class Indicador(models.Model):
+
+    class TipoIndicador(models.TextChoices):
+        DRE = "DRE", _("DRE")
+        DASH = "Dash", _("Dash")
+
     descricao = models.CharField(
         max_length=100, unique=True, verbose_name="Descricao"
     )
+    tipo = models.CharField(max_length=80, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Criado")
     updated_at = models.DateTimeField(auto_now=True, verbose_name="Atualizado")
 
     def __str__(self):
         return self.descricao
+    
+    def get_tipo_list(self):
+        return self.tipo.split(',') if self.tipo else []
 
     class Meta:
         db_table = "indicadores"

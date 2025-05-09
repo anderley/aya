@@ -5,7 +5,7 @@ from django.shortcuts import redirect, render
 
 @login_required(redirect_field_name='login')
 def main(request):
-    return render(request, 'base.html')
+    return redirect('view_dash')
 
 
 def logout_view(request):

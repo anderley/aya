@@ -10,6 +10,7 @@ from .resources import(
      CentroCustosResource, TipoLancamentosResource,
      MotivosExclusaoResource, IndicadorResource
 )
+from .forms import IndicadorAdminForm
 
 
 class BancosAdmin(ImportExportModelAdmin):
@@ -105,10 +106,12 @@ class MotivosExclusaoAdmin(ImportExportModelAdmin):
 
 
 class IndicadorAdmin(ImportExportModelAdmin):
+    form = IndicadorAdminForm
     resource_class = IndicadorResource
     list_display = [
         "id",
         "descricao",
+        "tipo",
         "created_at",
         "updated_at"
     ]

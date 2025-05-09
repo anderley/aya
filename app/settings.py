@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'core',
     'contas_pagar',
     'contas_receber',
+    'dashes',
     'dre',
     'empresas',
     'estoques',

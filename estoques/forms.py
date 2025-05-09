@@ -1,4 +1,5 @@
 import calendar
+import locale
 
 from datetime import date
 
@@ -8,6 +9,9 @@ from django.db import IntegrityError
 from .models import Estoque
 from empresas.models import Empresa
 from core.models import MotivoExclusao
+
+
+locale.setlocale(locale.LC_TIME, "pt_BR.utf8")
 
 
 class EstoqueForm(forms.ModelForm):
